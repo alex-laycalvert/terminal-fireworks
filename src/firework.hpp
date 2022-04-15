@@ -14,7 +14,7 @@ class Firework {
     Firework(const int row, const int col, const int size, const int ttl);
     ~Firework();
     void display();
-    void update();
+    bool update();
 };
 
 #endif  // FIREWORK_HPP

@@ -34,7 +34,8 @@ void Firework::display() {
     explode_count++;
 }
 
-void Firework::update() {
+bool Firework::update() {
+    if (explode_count >= explode_radius) return false;
     if (!exploding) {
         age++;
         row--;
@@ -42,4 +43,5 @@ void Firework::update() {
     if (row - size <= 0 || age >= ttl) {
         exploding = true;
     }
+    return true;
 }
