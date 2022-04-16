@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
     max_size = DEFAULT_MAX_SIZE;
     min_ttl = DEFAULT_MIN_TTL;
     max_ttl = DEFAULT_MAX_TTL;
-    start = rows - 1 - DEFAULT_START;
+    start = rows - DEFAULT_START;
 
     int opt;
     while ((opt = getopt_long(argc, argv, OPTIONS, longopts, NULL)) != -1) {
@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
                 max_ttl = atoi(optarg);
                 break;
             case 'S':
-                start = rows - 1 - atoi(optarg);
+                start = rows - atoi(optarg);
                 break;
             default:
                 usage(argv[0]);
@@ -122,8 +122,6 @@ int main(int argc, char **argv) {
     int spawn_counter = 0;
     while (1) {
         if (getch() == 'q') break;
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++) mvprintw(i, j, " ");
         if (fireworks.size() < max_fireworks && spawn_counter == 0) {
             Firework f(start, (rand() % (cols - 2)) + 1,
                        (rand() % (max_size - min_size)) + min_size,
@@ -131,8 +129,8 @@ int main(int argc, char **argv) {
             fireworks.push_back(f);
         }
         for (int i = 0; i < fireworks.size(); i++) {
-            fireworks[i].display();
             if (!fireworks[i].update()) fireworks.erase(fireworks.begin() + i);
+            fireworks[i].display();
         }
         refresh();
         usleep(100000);

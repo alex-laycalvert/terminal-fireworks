@@ -35,11 +35,19 @@ void Firework::display() {
 }
 
 bool Firework::update() {
-    if (explode_count >= explode_radius) return false;
     if (!exploding) {
+        for (int i = row - size; i < row; i++) mvprintw(i, col, " ");
         age++;
         row--;
+    } else {
+        for (int i = row - size - explode_radius;
+             i <= row - size + explode_radius; i++) {
+            for (int j = col - explode_radius; j <= col + explode_radius; j++) {
+                mvprintw(i, j, " ");
+            }
+        }
     }
+    if (explode_count >= explode_radius) return false;
     if (row - size <= 0 || age >= ttl) {
         exploding = true;
     }
